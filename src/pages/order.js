@@ -2,20 +2,26 @@ import React from 'react';
 import { graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import SEO from '../components/SEO';
+import PizzaOrder from '../components/PizzaOrder'
 import useForm from '../utils/useForm';
 import calculatePizzaPrice from '../utils/calculatePizzaPrice';
+import calculateOrderTotal from '../utils/calculateOrderTotal'
 import formatMoney from '../utils/formatMoney';
+import OrderStyles from '../styles/OrderStyles'
+import MenuItemStyles from '../styles/MenuItemStyles'
+import usePizza from '../utils/usePizza'
 
 export default function OrderPage({ data }) {
+  const pizzas = data.pizzas.nodes;
   const { values, updateValue } = useForm({
     name: '',
     email: '',
   });
-  const pizzas = data.pizzas.nodes;
+  const { order, addToOrder, removeFromOrder } = usePizza({ pizzas, inputs: values });
   return (
     <>
       <SEO title="Order a Pizza!" />
-      <form>
+      <OrderStyles>
         <fieldset>
           <legend>Your Info</legend>
           <label htmlFor="name">Name</label>
@@ -38,7 +44,7 @@ export default function OrderPage({ data }) {
         <fieldset>
           <legend>Menu</legend>
           {pizzas.map((pizza) => (
-            <div key={pizza.id}>
+            <MenuItemStyles key={pizza.id}>
               <Img
                 width="50"
                 height="50"
@@ -49,19 +55,41 @@ export default function OrderPage({ data }) {
                 <h2>{pizza.name}</h2>
               </div>
               <div>
-                {['S', 'M', 'L'].map((size) => (
-                  <button type="button">
+                {['S', 'M', 'L'].map((size, i) => (
+                  <button
+                    key={i}
+                    type="button"
+                    onClick={() => addToOrder({
+                      id: pizza.id,
+                      size,
+                    })}
+                  >
                     {size} {formatMoney(calculatePizzaPrice(pizza.price, size))}
                   </button>
                 ))}
               </div>
-            </div>
+            </MenuItemStyles>
           ))}
         </fieldset>
         <fieldset>
           <legend>Order</legend>
+          <PizzaOrder order={order} removeFromOrder={removeFromOrder} pizzas={pizzas} />
         </fieldset>
-      </form>
+        <fieldset>
+          <h3>
+            Your Total is {formatMoney(calculateOrderTotal(order, pizzas))}
+          </h3>
+          {/* <div aria-live="polite" aria-atomic="true">{error ? <p>Error: {error}</p> : ''}</div> */}
+          <button type="submit">
+            <span aria-live="assertive" aria-atomic="true">
+              {/* {loading ? 'Placing Order...' : ''} */}
+              Placing Order...
+            </span>
+            {/* {loading ? '' : 'Order Ahead'} */}
+            Order Ahead
+          </button>
+        </fieldset>
+      </OrderStyles>
     </>
   );
 }

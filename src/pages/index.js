@@ -1,10 +1,10 @@
 import React from 'react';
-import Nav from '../components/Nav';
-import Layout from '../components/Layout';
+import SEO from '../components/SEO';
 
 export default function HomePage() {
   return (
     <>
+      <SEO title="Order a Pizza!" />
       <p>Hey! I'm the home page</p>
       <p>Hey I'm another element</p>
     </>
