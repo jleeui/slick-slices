@@ -22,7 +22,7 @@ const ToppingsStyles = styled.div`
       padding: 2px 5px;
     }
 
-    .active {
+    &[aria-current='page'] {
       background: var(--yellow);
     }
   }
@@ -61,7 +61,7 @@ function countPizzasInToppings(pizzas) {
   return sortedToppings;
 }
 
-export default function ToppingsFitler() {
+export default function ToppingsFitler({ activeTopping }) {
   // get a list of all the toppings
   // get a list of all the pizzas with their toppings
   const { toppings, pizzas } = useStaticQuery(graphql`
@@ -91,11 +91,18 @@ export default function ToppingsFitler() {
   // link it up
   return (
     <ToppingsStyles>
-      <p>TOPPINGS: </p>
+      <Link to="/pizzas">
+        <span className="name">All</span>
+        <span className="count">{pizzas.nodes.length}</span>
+      </Link>
       {
         // loop over the list of toppings and display the topping and the count of pizzas in that toping
         toppingsWithCounts.map((topping) => (
-          <Link key={topping.id} to={`/topping/${topping.name}`}>
+          <Link
+            key={topping.id}
+            to={`/topping/${topping.name}`}
+            className={topping.name === activeTopping ? 'active' : ''}
+          >
             <span className="name">{topping.name}</span>
             <span className="count">{topping.count}</span>
           </Link>

@@ -5,6 +5,9 @@ var plugins = [{
       plugin: require('/Users/jlee/Documents/proj/gatsby/course/starter-files/gatsby/node_modules/gatsby-source-sanity/gatsby-ssr'),
       options: {"plugins":[],"projectId":"rc6g6wyk","dataset":"live","watchMode":true,"token":"skK7mCncHRlRjNsEsNpM5jkyytgGWPom8uKX8Q1iPhQBXwOKgoDMHWLteN6ppju5jFRfXNZa5mhxSe4Vv6LpHTDAmZIuVKzN7ZgMH8GM80HQBfNItpNW5CfawmBL1UXP139mzXXuY9MxDKOqUogey3dHzHoPN70wg99BKIbP1hQQF5zeKh1P"},
     },{
+      plugin: require('/Users/jlee/Documents/proj/gatsby/course/starter-files/gatsby/node_modules/gatsby-plugin-react-helmet/gatsby-ssr'),
+      options: {"plugins":[]},
+    },{
       plugin: require('/Users/jlee/Documents/proj/gatsby/course/starter-files/gatsby/gatsby-ssr'),
       options: {"plugins":[]},
     }]
