@@ -3,7 +3,7 @@ import { Link, graphql } from 'gatsby';
 import Img from 'gatsby-image';
 import styled from 'styled-components';
 import Pagination from '../components/Pagination';
-import SEO from '../components/SEO'
+import SEO from '../components/SEO';
 
 const SlicemasterGrid = styled.div`
   display: grid;
@@ -57,19 +57,16 @@ export default function SlicemastersPage({ data, pageContext }) {
       />
       <SlicemasterGrid>
         {slicemasters.map((person) => (
-            <SlicemasterStyles key={person.id}>
-              <Link to={person.slug.current}>
-                <h2>
-                  <span className="mark">{person.name}</span>
-                </h2>
-              </Link>
-              <Img fluid={person.image.asset.fluid} />
-              <p className="description">
-                {person.description}
-              </p>
-            </SlicemasterStyles>
-          )
-        )}
+          <SlicemasterStyles key={person.id}>
+            <Link to={person.slug.current}>
+              <h2>
+                <span className="mark">{person.name}</span>
+              </h2>
+            </Link>
+            <Img fluid={person.image.asset.fluid} />
+            <p className="description">{person.description}</p>
+          </SlicemasterStyles>
+        ))}
       </SlicemasterGrid>
     </>
   );
